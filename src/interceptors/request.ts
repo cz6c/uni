@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import qs from 'qs'
 import { useUserStore } from '@/store'
-import { platform } from '@/utils/platform'
 import { getEnvBaseUrl } from '@/utils'
+import { GetTM } from './crypto'
 
 export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
@@ -12,6 +12,13 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
 
 // 请求基准地址
 const baseUrl = getEnvBaseUrl()
+
+const noTokenUrl = [
+  '/auth/api/TouristRegister',
+  '/auth/TokenAuth/GetSystemDate',
+  '/auth/api/RefreshToken',
+]
+const systemInfo = uni.getSystemInfoSync()
 
 // 拦截器配置
 const httpInterceptor = {
@@ -47,14 +54,21 @@ const httpInterceptor = {
     options.timeout = 10000 // 10s
     // 2. （可选）添加小程序端请求头标识
     options.header = {
-      platform, // 可选，与 uniapp 定义的平台一致，告诉后台来源
+      IsHome: 1,
+      PlatForm: 'wechatApplets',
+      VersionNo: systemInfo.system,
+      browserVersion: systemInfo.model,
+      system: systemInfo.osName,
+      systemVersion: systemInfo.osVersion,
       ...options.header,
     }
     // 3. 添加 token 请求头标识
-    const userStore = useUserStore()
-    const { token } = userStore.userInfo as unknown as IUserInfo
-    if (token) {
-      options.header.Authorization = `Bearer ${token}`
+    if (!noTokenUrl.find((url) => options.url.includes(url))) {
+      const userStore = useUserStore()
+      const tm = GetTM()
+      const token = userStore.tsbUser.token
+      const tk = token ? token + (tm ? '.' + tm : '') : ''
+      options.header.Utoken = tk
     }
   },
 }

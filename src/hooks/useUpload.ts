@@ -1,7 +1,7 @@
-// TODO: 别忘加更改环境变量的 VITE_UPLOAD_BASEURL 地址。
-import { getEnvBaseUploadUrl } from '@/utils'
+// TODO: 别忘加更改环境变量的 VITE_SERVER2_BASEURL 地址。
+import { getEnvBaseUrl2 } from '@/utils'
 
-const VITE_UPLOAD_BASEURL = `${getEnvBaseUploadUrl()}`
+const uploadUrl = `${getEnvBaseUrl2()}/file/File/InsertPic`
 
 /**
  * useUpload 是一个定制化的请求钩子，用于处理上传图片。
@@ -51,12 +51,12 @@ export default function useUpload<T = string>(formData: Record<string, any> = {}
 
 function uploadFile<T>({ tempFilePath, formData, data, error, loading }) {
   uni.uploadFile({
-    url: VITE_UPLOAD_BASEURL,
+    url: uploadUrl,
     filePath: tempFilePath,
     name: 'file',
     formData,
     success: (uploadFileRes) => {
-      data.value = uploadFileRes.data as T
+      data.value = JSON.parse(uploadFileRes.data).result.object[0].fullPath as T
     },
     fail: (err) => {
       console.error('uni.uploadFile err->', err)

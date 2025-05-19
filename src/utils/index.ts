@@ -149,11 +149,11 @@ export const getEnvBaseUrl = () => {
 }
 
 /**
- * 根据微信小程序当前环境，判断应该获取的 UPLOAD_BASEURL
+ * 根据微信小程序当前环境，判断应该获取的 BASEURL2
  */
-export const getEnvBaseUploadUrl = () => {
+export const getEnvBaseUrl2 = () => {
   // 请求基准地址
-  let baseUploadUrl = import.meta.env.VITE_UPLOAD_BASEURL
+  let baseUrl2 = import.meta.env.VITE_SERVER2_BASEURL
 
   // 微信小程序端环境区分
   if (isMpWeixin) {
@@ -163,16 +163,43 @@ export const getEnvBaseUploadUrl = () => {
 
     switch (envVersion) {
       case 'develop':
-        baseUploadUrl = import.meta.env.VITE_UPLOAD_BASEURL__WEIXIN_DEVELOP || baseUploadUrl
+        baseUrl2 = import.meta.env.VITE_SERVER2_BASEURL__WEIXIN_DEVELOP || baseUrl2
         break
       case 'trial':
-        baseUploadUrl = import.meta.env.VITE_UPLOAD_BASEURL__WEIXIN_TRIAL || baseUploadUrl
+        baseUrl2 = import.meta.env.VITE_SERVER2_BASEURL__WEIXIN_TRIAL || baseUrl2
         break
       case 'release':
-        baseUploadUrl = import.meta.env.VITE_UPLOAD_BASEURL__WEIXIN_RELEASE || baseUploadUrl
+        baseUrl2 = import.meta.env.VITE_SERVER2_BASEURL__WEIXIN_RELEASE || baseUrl2
         break
     }
   }
 
-  return baseUploadUrl
+  return baseUrl2
+}
+
+/**
+ * @description: 生成uuid
+ * @return uuid
+ */
+export function generateUUID() {
+  let uuid = ''
+  for (let i = 0; i < 32; i++) {
+    const random = (Math.random() * 16) | 0
+    if (i === 8 || i === 12 || i === 16 || i === 20) uuid += '-'
+    uuid += (i === 12 ? 4 : i === 16 ? (random & 3) | 8 : random).toString(16)
+  }
+  return uuid
+}
+
+/**
+ * @description: 获取设备唯一标识
+ * @return userId
+ */
+export function getLocalUUID() {
+  let userId = uni.getStorageSync('platFormUUID') || ''
+  if (!userId) {
+    userId = generateUUID()
+    uni.setStorageSync('platFormUUID', userId)
+  }
+  return userId
 }
