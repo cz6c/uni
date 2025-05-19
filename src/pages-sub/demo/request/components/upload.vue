@@ -1,14 +1,5 @@
-<route lang="json5" type="page">
-{
-  layout: 'default',
-  style: {
-    navigationBarTitleText: '上传-状态一体化',
-  },
-}
-</route>
-
 <template>
-  <view class="p-4 text-center">
+  <view class="p-6 text-center">
     <wd-button @click="run">选择图片并上传</wd-button>
     <view v-if="loading" class="text-blue h-10">上传...</view>
     <template v-else>

@@ -30,10 +30,10 @@
         "text": "首页"
       },
       {
-        "iconPath": "static/tabbar/example.png",
-        "selectedIconPath": "static/tabbar/exampleHL.png",
-        "pagePath": "pages/about/about",
-        "text": "关于"
+        "iconPath": "static/tabbar/personal.png",
+        "selectedIconPath": "static/tabbar/personalHL.png",
+        "pagePath": "pages/my/index",
+        "text": "我的"
       }
     ]
   },
@@ -47,10 +47,10 @@
       }
     },
     {
-      "path": "pages/about/about",
+      "path": "pages/my/index",
       "type": "page",
       "style": {
-        "navigationBarTitleText": "关于"
+        "navigationBarTitleText": "我的"
       }
     }
   ],
@@ -62,7 +62,14 @@
           "path": "demo/index",
           "type": "page",
           "style": {
-            "navigationBarTitleText": "分包页面 标题"
+            "navigationBarTitleText": "代码示例（分包）"
+          }
+        },
+        {
+          "path": "demo/request/index",
+          "type": "page",
+          "style": {
+            "navigationBarTitleText": "请求示例"
           }
         }
       ]

@@ -26,6 +26,13 @@
       <div class="search"></div>
     </view>
   </view>
+  <wd-swiper
+    :list="swiperList"
+    autoplay
+    v-model:current="current"
+    @click="handleClick"
+    @change="onChange"
+  ></wd-swiper>
   <!-- :style="{ marginTop: safeAreaInsets?.top + height + 'px' }" -->
   <view class="bg-white overflow-hidden pt-2 px-4">
     <view class="mt-12">
@@ -42,7 +49,6 @@
       模板分支是：
       <text class="text-green-500">base</text>
     </view>
-    <wd-button @click="goSub">分包页面</wd-button>
   </view>
 </template>
 
@@ -73,14 +79,20 @@ function changeTab(val) {
   tab.value = val
 }
 
+const current = ref<number>(0)
+
+const swiperList = ref(['https://registry.npmmirror.com/wot-design-uni-assets/*/files/panda.jpg'])
+function handleClick(e) {
+  console.log(e)
+}
+function onChange(e) {
+  console.log(e)
+}
+
 // 测试 uni API 自动引入
 onLoad(() => {
   console.log(TestEnum.A)
 })
-
-function goSub() {
-  uni.navigateTo({ url: '/pages-sub/demo/index' })
-}
 </script>
 
 <style lang="scss">
