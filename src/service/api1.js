@@ -13,3 +13,23 @@ export const GetSystemDateNew = (data) => {
 export const ProductLabelRank = (data) => {
   return http.post(baseUrl + '/product/TsbProduct/ProductLabelRank', data)
 }
+
+export const GetAdvertisementList = (data) => {
+  return http.post(baseUrl + '/synthesis/TsbAdManage/GetAdvertisementList', data)
+}
+
+export const NewProductList = (data) => {
+  return http.post(baseUrl + '/product/TsbProductNew/NewProductList', data)
+}
+
+export const SaleHotProductList = (data) => {
+  return http.post(baseUrl + '/product/TsbProductNew/SaleHotProductList', data)
+}
+
+export const PrefreProductList = (data) => {
+  return http.post(baseUrl + '/product/TsbProductNew/PrefreProductList', data)
+}
+
+export const GetProductionAreaList = (data) => {
+  return http.post(baseUrl + '/user/ProductionArea/GetProductionAreaList', data)
+}

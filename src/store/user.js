@@ -36,7 +36,7 @@ export const useUserStore = defineStore(
       const userId = getLocalUUID()
       const res = await TouristLogin({
         UserAccountOrUserMobile: userId,
-        platForm: 'PC',
+        platForm: 'wechatApplets',
       })
       console.log('🚀 ~ getTouristToken ~ res:', res)
       if (res.isLogin) {

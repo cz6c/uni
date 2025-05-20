@@ -8,3 +8,7 @@ const baseUrl = getEnvBaseUrl2()
 export const TouristLogin = (data) => {
   return http.post(baseUrl + '/auth/api/TouristRegister', data)
 }
+
+export const GetCoreAreaList = (data) => {
+  return http.post(baseUrl + '/api/GetCoreAreaList', data)
+}
