@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import qs from 'qs'
-import { useUserStore } from '@/store'
 import { getEnvBaseUrl } from '@/utils'
 import { GetTM } from './crypto'
 
@@ -8,16 +7,13 @@ export type CustomRequestOptions = UniApp.RequestOptions & {
   query?: Record<string, any>
   /** 出错时是否隐藏错误提示 */
   hideErrorToast?: boolean
+  /** token */
+  Utoken?: string
 } & IUniUploadFileOptions // 添加uni.uploadFile参数类型
 
 // 请求基准地址
 const baseUrl = getEnvBaseUrl()
 
-const noTokenUrl = [
-  '/auth/api/TouristRegister',
-  '/auth/TokenAuth/GetSystemDate',
-  '/auth/api/RefreshToken',
-]
 const systemInfo = uni.getSystemInfoSync()
 
 // 拦截器配置
@@ -62,13 +58,11 @@ const httpInterceptor = {
       systemVersion: systemInfo.osVersion,
       ...options.header,
     }
-    // 3. 添加 token 请求头标识
-    if (!noTokenUrl.find((url) => options.url.includes(url))) {
-      const userStore = useUserStore()
+    // 3. 添加 token 请求头标识    加入鉴权串
+    const token = options.Utoken
+    if (token) {
       const tm = GetTM()
-      const token = userStore.tsbUser.token
-      const tk = token ? token + (tm ? '.' + tm : '') : ''
-      options.header.Utoken = tk
+      options.header.Utoken = token + (tm ? '.' + tm : '')
     }
   },
 }

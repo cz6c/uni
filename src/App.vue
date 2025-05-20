@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
-import { useUserStore } from '@/store'
-const userStore = useUserStore()
 
 onLaunch(() => {
   console.log('App Launch')
-  userStore.getTouristToken()
 })
 onShow(() => {
   console.log('App Show')

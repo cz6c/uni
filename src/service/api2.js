@@ -9,6 +9,10 @@ export const TouristLogin = (data) => {
   return http.post(baseUrl + '/auth/api/TouristRegister', data)
 }
 
+export const RefreshToken = (data) => {
+  return http.post(baseUrl + '/auth/api/RefreshToken', data)
+}
+
 export const GetCoreAreaList = (data) => {
   return http.post(baseUrl + '/api/GetCoreAreaList', data)
 }

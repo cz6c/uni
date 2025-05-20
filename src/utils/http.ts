@@ -1,8 +1,48 @@
 import { CustomRequestOptions } from '@/interceptors/request'
+import { RefreshToken } from '@/service/api2'
+import { useUserStore } from '@/store'
+import getSysteme from '@/interceptors/getSystem'
 
-export const http = <T>(options: CustomRequestOptions) => {
+// 401,419是否正在并发请求处理
+let is401 = false
+let requestList401 = []
+let is419 = false
+let requestList419 = []
+let isNoteken = false
+let requestListNoteken = []
+
+export const noTokenUrl = [
+  '/auth/api/TouristRegister',
+  '/auth/TokenAuth/GetSystemDate',
+  '/auth/api/RefreshToken',
+]
+
+export const http = async <T>(options: CustomRequestOptions) => {
   // 1. 返回 Promise 对象
   return new Promise<IResData<T>>((resolve, reject) => {
+    const userStore = useUserStore()
+    if (!noTokenUrl.find((url) => options.url.includes(url))) {
+      const token = userStore.token
+      if (!token) {
+        if (!isNoteken) {
+          isNoteken = true
+          userStore.getTouristToken().then(() => {
+            isNoteken = false
+            resolve(http(options))
+            requestListNoteken.forEach((callback) => {
+              callback()
+            })
+            requestListNoteken = []
+          })
+        } else {
+          requestListNoteken.unshift(() => {
+            resolve(http(options))
+          })
+        }
+      } else {
+        options.Utoken = token
+      }
+    }
     uni.request({
       ...options,
       dataType: 'json',
@@ -10,12 +50,50 @@ export const http = <T>(options: CustomRequestOptions) => {
       responseType: 'json',
       // #endif
       // 响应成功
-      success(res) {
+      async success(res) {
         const data = (res.data as any).result as IResData<T>
         // 状态码 2xx，参考 axios 的设计
         if (res.statusCode >= 200 && res.statusCode < 300) {
           // 2.1 提取核心数据 res.data
-          resolve(data)
+          if (data.code === 401) {
+            if (!is401) {
+              is401 = true
+              const tkRes: any = await RefreshToken({ token: userStore.token })
+              if (tkRes.isLogin && tkRes.accessToken) {
+                is401 = false
+                resolve(http(options))
+                requestList401.forEach((callback) => {
+                  callback()
+                })
+                requestList401 = []
+              } else {
+                requestList401 = []
+                is401 = false
+                userStore.clearUserInfo()
+              }
+            } else {
+              requestList401.unshift(() => {
+                resolve(http(options))
+              })
+            }
+          } else if (data.code === 419) {
+            if (!is419) {
+              is419 = true
+              await getSysteme()
+              is419 = false
+              resolve(http(options))
+              requestList419.forEach((callback) => {
+                callback()
+              })
+              requestList419 = []
+            } else {
+              requestList419.unshift(() => {
+                resolve(http(options))
+              })
+            }
+          } else {
+            resolve(data)
+          }
         } else if (res.statusCode === 401) {
           // 401错误  -> 清理用户信息，跳转到登录页
           // userStore.clearUserInfo()

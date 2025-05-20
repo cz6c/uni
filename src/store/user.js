@@ -1,24 +1,10 @@
 import { defineStore } from 'pinia'
-import { ref, reactive } from 'vue'
 import { TouristLogin } from '@/service/api2'
 import { getLocalUUID } from '@/utils/index'
-
-const initState = { nickname: '', avatar: '' }
 
 export const useUserStore = defineStore(
   'user',
   () => {
-    const userInfo = ref({ ...initState })
-
-    const setUserInfo = (val) => {
-      userInfo.value = val
-    }
-
-    const clearUserInfo = () => {
-      userInfo.value = { ...initState }
-    }
-    const isLogined = computed(() => !!userInfo.value.token)
-
     const tsbUser = reactive({
       token: '', // token信息
       userInfo: {
@@ -30,6 +16,8 @@ export const useUserStore = defineStore(
         },
       }, // 用户信息
     })
+    const isLogined = computed(() => tsbUser.userInfo.isLogin)
+    const token = computed(() => tsbUser.token)
 
     // 获取游客登录
     async function getTouristToken() {
@@ -61,13 +49,28 @@ export const useUserStore = defineStore(
       tsbUser.userInfo = object
     }
 
+    const clearUserInfo = (msg = '登录过期，请重新登录') => {
+      this.$reset()
+      uni.showToast({
+        title: msg,
+        duration: 1000,
+        icon: 'none',
+        success: (res) => {
+          setTimeout(() => {
+            uni.reLaunch({
+              url: '/pages/authorizationPage/authorizationPage',
+            })
+          }, 2000)
+        },
+      })
+    }
+
     return {
-      userInfo,
-      setUserInfo,
-      clearUserInfo,
-      isLogined,
       tsbUser,
+      isLogined,
+      token,
       getTouristToken,
+      clearUserInfo,
     }
   },
   {
