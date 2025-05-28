@@ -47,11 +47,23 @@
       }
     },
     {
+      "path": "pages/login/login",
+      "type": "page",
+      "style": {
+        "navigationBarTitleText": "登录"
+      },
+      "layout": false
+    },
+    {
       "path": "pages/my/index",
       "type": "page",
       "style": {
         "navigationBarTitleText": "我的"
       }
+    },
+    {
+      "path": "pages/webView/webView",
+      "type": "page"
     }
   ],
   "subPackages": [
@@ -70,6 +82,14 @@
           "type": "page",
           "style": {
             "navigationBarTitleText": "请求示例"
+          }
+        },
+        {
+          "path": "demo/z-paging/index",
+          "type": "page",
+          "layout": "default",
+          "style": {
+            "navigationBarTitleText": "z-paging"
           }
         }
       ]

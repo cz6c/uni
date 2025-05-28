@@ -13,10 +13,13 @@ export const useUserStore = defineStore(
         userType: -3, // -1企业 -2个人 -3游客
         userInfo: {
           linkman: '游客',
+          userImage: 'https://imgs.toysbear.net/SalesImg/defaultAvatar.png',
         },
+        companyMember: {},
+        commparnyList: [],
       }, // 用户信息
     })
-    const isLogined = computed(() => tsbUser.userInfo.isLogin)
+    const isLogined = computed(() => tsbUser.userInfo.isLogin && tsbUser.userInfo.isLogin !== -3)
     const token = computed(() => tsbUser.token)
 
     // 获取游客登录
@@ -35,7 +38,7 @@ export const useUserStore = defineStore(
           isLogin: false,
           uid: res.userInfo.id,
         }
-        setUserInfot(userInfo)
+        setUserInfo(userInfo)
       }
     }
 
@@ -43,7 +46,7 @@ export const useUserStore = defineStore(
       tsbUser.token = value
     }
 
-    function setUserInfot(value) {
+    function setUserInfo(value) {
       const object = JSON.parse(JSON.stringify(value))
       delete object.accessToken
       tsbUser.userInfo = object
@@ -55,11 +58,10 @@ export const useUserStore = defineStore(
         title: msg,
         duration: 1000,
         icon: 'none',
-        success: (res) => {
-          setTimeout(() => {
-            uni.reLaunch({
-              url: '/pages/authorizationPage/authorizationPage',
-            })
+        success: () => {
+          setTimeout(async () => {
+            await this.getTouristToken()
+            uni.switchTab({ url: `/pages/index/index` })
           }, 2000)
         },
       })
@@ -69,6 +71,8 @@ export const useUserStore = defineStore(
       tsbUser,
       isLogined,
       token,
+      setToken,
+      setUserInfo,
       getTouristToken,
       clearUserInfo,
     }

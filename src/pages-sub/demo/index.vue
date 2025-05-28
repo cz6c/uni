@@ -17,6 +17,7 @@
       <!-- #endif -->
     </view>
     <wd-cell title="请求" is-link to="/pages-sub/demo/request/index" />
+    <wd-cell title="z-paging" is-link to="/pages-sub/demo/z-paging/index" />
     <wd-cell title="toast" is-link @click="showToast" />
     <wd-cell title="confirm" is-link @click="confirm" />
   </view>

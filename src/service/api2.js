@@ -13,6 +13,14 @@ export const RefreshToken = (data) => {
   return http.post(baseUrl + '/auth/api/RefreshToken', data)
 }
 
+export const AuthenticateV2 = (data) => {
+  return http.post(baseUrl + '/auth/api/AuthenticateV2', data)
+}
+
+export const UserAffiliateCompany = (data) => {
+  return http.post(baseUrl + '/auth/api/UserAffiliateCompany', data)
+}
+
 export const GetCoreAreaList = (data) => {
   return http.post(baseUrl + '/api/GetCoreAreaList', data)
 }

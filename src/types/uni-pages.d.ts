@@ -5,9 +5,12 @@
 
 interface NavigateToOptions {
   url: "/pages/index/index" |
+       "/pages/login/login" |
        "/pages/my/index" |
+       "/pages/webView/webView" |
        "/pages-sub/demo/index" |
-       "/pages-sub/demo/request/index";
+       "/pages-sub/demo/request/index" |
+       "/pages-sub/demo/z-paging/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 

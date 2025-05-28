@@ -33,3 +33,7 @@ export const PrefreProductList = (data) => {
 export const GetProductionAreaList = (data) => {
   return http.post(baseUrl + '/user/ProductionArea/GetProductionAreaList', data)
 }
+
+export const SearchEngineProduct = (data) => {
+  return http.post(baseUrl + '/product/TsbProduct/SearchEngineProduct', data)
+}

@@ -52,7 +52,7 @@
         >
           <swiper-item v-for="(item, i) in jinGangArr" :key="i">
             <view class="center flex-col">
-              <BaseImage :src="item.img" width="72rpx" height="72rpx"></BaseImage>
+              <BaseImage :src="item.img" width="72rpx" height="72rpx" />
               <view class="className ellipsis">{{ item.coreName }}</view>
             </view>
           </swiper-item>
@@ -72,7 +72,7 @@
         <view class="list">
           <view v-for="(item, i) in newProductList" :key="i">
             <view class="center flex-col">
-              <BaseImage :src="item.imageUrl" width="192rpx" height="162rpx"></BaseImage>
+              <BaseImage :src="item.imageUrl" width="192rpx" height="162rpx" />
               <view class="mt-1 text-3.25 font-700 color-#f51e12">
                 ￥{{ item.price && item.price.toFixed(2) }}
               </view>
@@ -87,7 +87,7 @@
           <view class="list" v-if="hotProductList.length">
             <view v-for="(item, i) in hotProductList" :key="i">
               <view class="center flex-col">
-                <BaseImage :src="item.imageUrl" width="135rpx" height="114rpx"></BaseImage>
+                <BaseImage :src="item.imageUrl" width="135rpx" height="114rpx" />
                 <view class="mt-1 text-3.25 font-700 color-#f51e12">
                   ￥{{ item.price && item.price.toFixed(2) }}
                 </view>
@@ -100,7 +100,7 @@
             <view class="dt">{{ firstProductList[0].prefredName.substr(0, 4) }}</view>
             <view v-for="(item, i) in firstProductList" :key="i">
               <view class="center flex-col">
-                <BaseImage :src="item.imageUrl" width="135rpx" height="114rpx"></BaseImage>
+                <BaseImage :src="item.imageUrl" width="135rpx" height="114rpx" />
                 <view class="mt-1 text-3.25 font-700 color-#f51e12">
                   ￥{{ item.price && item.price.toFixed(2) }}
                 </view>
@@ -113,7 +113,7 @@
             <view class="dt">{{ secondProductList[0].prefredName.substr(0, 4) }}</view>
             <view v-for="(item, i) in secondProductList" :key="i">
               <view class="center flex-col">
-                <BaseImage :src="item.imageUrl" width="135rpx" height="114rpx"></BaseImage>
+                <BaseImage :src="item.imageUrl" width="135rpx" height="114rpx" />
                 <view class="mt-1 text-3.25 font-700 color-#f51e12">
                   ￥{{ item.price && item.price.toFixed(2) }}
                 </view>
@@ -139,7 +139,7 @@
                         width="214rpx"
                         height="202rpx"
                         radius="12rpx"
-                      ></BaseImage>
+                      />
                       <view class="name ellipsis">
                         {{ arr[0] && (arr[0].adTitle || arr[0].companyName) }}
                       </view>
@@ -152,7 +152,7 @@
                         width="214rpx"
                         height="202rpx"
                         radius="12rpx"
-                      ></BaseImage>
+                      />
                       <view class="name ellipsis">
                         {{ arr[1] && (arr[1].adTitle || arr[1].companyName) }}
                       </view>
@@ -166,7 +166,7 @@
                           width="212rpx"
                           height="94rpx"
                           radius="12rpx"
-                        ></BaseImage>
+                        />
                         <view class="name ellipsis">
                           {{ arr[2] && (arr[2].adTitle || arr[2].companyName) }}
                         </view>
@@ -179,7 +179,7 @@
                           width="212rpx"
                           height="94rpx"
                           radius="12rpx"
-                        ></BaseImage>
+                        />
                         <view class="name ellipsis">
                           {{ arr[3] && (arr[3].adTitle || arr[3].companyName) }}
                         </view>
@@ -205,7 +205,7 @@
                     height="106rpx"
                     radius="12rpx"
                     fit="aspectFill"
-                  ></BaseImage>
+                  />
                   <view class="name ellipsis">{{ item.title }}</view>
                 </view>
               </swiper-item>
